@@ -17,7 +17,7 @@ ActiveRecord::Schema.define(version: 2021_04_01_120002) do
 
   create_table "requests", force: :cascade do |t|
     t.string "input"
-    t.string "output"
+    t.integer "output"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
   end
