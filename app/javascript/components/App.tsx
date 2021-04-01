@@ -1,21 +1,28 @@
 import * as React from 'react';
-import { Switch, Route } from 'react-router-dom';
+
+// ActionCreators
 import * as appActions from '../store/actionCreators';
+
+// Redux
 import { connect } from 'react-redux';
+
+// Components
+import { RequestsHistory } from './RequestsHistory/RequestsHistory';
+import { RequestsSender } from './RequestsSender/RequestsSender';
 
 
 const { useEffect } = React;
-const App = props => {
 
+const App = props => {
   useEffect(() => {
     props.onFetchPreviousRequests()
   }, [])
 
   return (
-    <Switch>
-      <Route exact path="/" render={() => ("home")}/>
-      <Route path="/hello" render={() => ("Hello")}/>
-    </Switch>
+    <>
+      <RequestsSender/>
+      <RequestsHistory requests={props.requests}/>
+    </>
   )
 }
 
@@ -24,5 +31,10 @@ const mapDispatchToProps = dispatch => {
     onFetchPreviousRequests: () => dispatch(appActions.onFetchPreviousRequests())
   };
 }
+const mapStateToProps = (state) => {
+  return {
+    requests: state.requests
+  };
+};
 
-export default connect(null, mapDispatchToProps)(App);
+export default connect(mapStateToProps, mapDispatchToProps)(App);

@@ -16,7 +16,7 @@ class Api::V1::RequestsController < ApplicationController
   end
 
   def request_params
-    params.permit!
+    params.select { |param| !["format", "controller", "action", "request"].include? param }.permit!
   end
 
   def determine_output(input)

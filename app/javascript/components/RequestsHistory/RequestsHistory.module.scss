@@ -1,0 +1,9 @@
+.RequestsHistory {
+  width: 100%;
+  box-shadow: 1px 1px 10px rgba(0, 0, 0, .15);
+  padding: 1.5em;
+  .RequestsContainer {
+    max-height: 10em;
+    overflow: auto;
+  }
+}
