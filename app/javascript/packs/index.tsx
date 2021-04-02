@@ -13,6 +13,8 @@ import appReducer from '../store/reducer';
 // Axios
 import axios from 'axios';
 
+// Semantic UI
+import 'semantic-ui-css/semantic.min.css'
 
 const csrfToken = document.querySelector('[name="csrf-token"]').content;
 axios.defaults.headers.common['X-CSRF-TOKEN'] = csrfToken;
