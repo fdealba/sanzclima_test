@@ -1,4 +1,5 @@
 import * as React from 'react';
+import axios from 'axios';
 
 // ActionCreators
 import * as appActions from '../store/actionCreators';
@@ -9,19 +10,50 @@ import { connect } from 'react-redux';
 // Components
 import { RequestsHistory } from './RequestsHistory/RequestsHistory';
 import { RequestsSender } from './RequestsSender/RequestsSender';
+import ErrorComponent from './ErrorComponent/errorComponent';
 
 
-const { useEffect } = React;
+const { useEffect, useState } = React;
 
-const App = props => {
+const App = ({ onFetchPreviousRequests, requests }) => {
+  const [lastOutput, setLastOutput] = useState(0);
+  const [query, setQuery] = useState({});
+  const [error, setError] = useState(false);
+
+
   useEffect(() => {
-    props.onFetchPreviousRequests()
+    onFetchPreviousRequests();
+    if (localStorage.getItem("last_output")) {
+      setLastOutput(Number(localStorage.getItem("last_output")));
+    }
   }, [])
+
+  const newRequest = () => {
+    if (Object.values(query).some(value => Number(value) >= 0)) {
+      axios.post('api/v1/requests/new', {
+        ...query
+      }).then(({ data: { output }}) => {
+        if (output !== null) {
+          localStorage.setItem('last_output', output);
+          setLastOutput(output);
+          setQuery({});
+          onFetchPreviousRequests();
+        }
+      })
+    } else {
+      setError(true);
+    }
+  }
 
   return (
     <>
-      <RequestsSender/>
-      <RequestsHistory requests={props.requests}/>
+      {error ? <ErrorComponent setError={setError} errorMessage="Please enter a number value in any of the values"/> : ''}
+      <h3 style={{ textAlign: 'center' }}>Your query:</h3>
+      <p style={{ textAlign: 'center' }}>
+        {JSON.stringify(query)}
+      </p>
+      <RequestsSender lastOutput={lastOutput} setQuery={setQuery} query={query} newRequest={newRequest} />
+      <RequestsHistory requests={requests}/>
     </>
   )
 }

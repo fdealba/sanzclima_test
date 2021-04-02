@@ -2,8 +2,16 @@
   width: 100%;
   box-shadow: 1px 1px 10px rgba(0, 0, 0, .15);
   padding: 1.5em;
-  .RequestsContainer {
-    max-height: 10em;
+  tbody {
+    display: block;
+    height: 25em;
     overflow: auto;
   }
+  thead,
+  tbody tr {
+    display: table;
+    width: 100%;
+    table-layout: fixed;
+  }  
 }
+

@@ -1,24 +1,37 @@
 import * as React from 'react';
 import classes from './RequestsHistory.module.scss';
+import { Table } from 'semantic-ui-react'
+
+const { Row, Cell, HeaderCell, Header, Body } = Table;
 
 export const RequestsHistory = ({ requests }) => {
 
-  const formatedRequests = requests && requests.length
-  ? requests.map((request, idx) => {
+  const formatedRequests = requests.map((request, idx) => {
     return (
-      <div key={idx}>
-        <p>Input: {request.input}</p>
-        <p>Output: {request.output}</p>
-      </div>
+      <Row key={idx}>
+        <Cell>{request.input}</Cell>
+        <Cell>{request.output}</Cell>
+       </Row>
     )
-  })
-  : 'No Requests have been done yet!';
+  });
 
   return (
   <div className={classes.RequestsHistory}>
     <h3>Requests History:</h3>
-    <div className={classes.RequestsContainer}>
-      {formatedRequests}
-    </div>
+    {requests && requests.length
+    ? <Table className={classes.RequestsContainer}>
+        <Header>
+          <Row>
+            <HeaderCell>Input</HeaderCell>
+            <HeaderCell>Output</HeaderCell>
+          </Row>
+        </Header>
+  
+        <Body>
+          {formatedRequests}
+        </Body>
+      </Table>
+    : <p>'No Requests have been done yet!'</p>}
+
   </div>);
 }

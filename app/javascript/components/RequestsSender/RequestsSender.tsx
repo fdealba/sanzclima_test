@@ -1,65 +1,55 @@
 import * as React from 'react';
 import classes from './RequestsSender.module.scss';
-import axios from 'axios';
 import { Button, Input } from 'semantic-ui-react';
 
 
-const { useState, useEffect } = React;
+const { useRef } = React;
 
-const constructObject = (keys, values) => {
-  let obj = {}
-  keys.forEach((key, idx) => {
-    obj[key.value] = Number(values[idx].value) >= 0 ? Number(values[idx].value) : values[idx].value;
-  })
-  return obj;
-}
+export const RequestsSender = ({ lastOutput, setQuery, query, newRequest }) => {
+  const keyInput = useRef();
+  const valueInput = useRef();
 
-export const RequestsSender = () => {
-  const [fields, setFields] = useState(1);
-  const [lastOutput, setLastOutput] = useState(0);
-
-  const keyValuePairs = [...Array(fields)].map((field, idx) => (
-      <div key={idx} className={classes.Inputs}>
-        <Input placeholder="key" name="key"/>
-        <Input placeholder="value" style={{ marginLeft: '1em' }} name="value"/>
-      </div>
-  ))
-
-  useEffect(( ) => {
-    setLastOutput(Number(localStorage.getItem("last_output") ? localStorage.getItem("last_output") : 0));
-  }, [])
-
-  const AddNewField = (event) => {
-    setFields(fields + 1);
+  const addField = (event) => {
+    setQuery((query) => {
+      const newQuery = { ...query };
+      if (keyInput.current && valueInput.current) {
+        let key = keyInput.current.inputRef.current.value;
+        let value = valueInput.current.inputRef.current.value;
+        value = Number(value) >= 0 ? Number(value) : value;
+        // Set new query key value pair
+        newQuery[key] = value;
+        // Clean Inputs
+        keyInput.current.inputRef.current.value = "";
+        valueInput.current.inputRef.current.value = "";
+      }
+      return newQuery
+    });
   }
 
-  const makePostRequest = (args) => {
-    axios.post('api/v1/requests/new', {
-      ...args
-    }).then(response => {
-      console.log(response);
-      localStorage.setItem('last_output', response.data.output);
-      setLastOutput(response.data.output);
-    })
-  }
-
-  const newRequest = (event) => {
-    const keys = document.querySelectorAll('input[name="key"]');
-    const values = document.querySelectorAll('input[name="value"]');
-    const args = constructObject(Array.from(keys), Array.from(values));
-    makePostRequest(args);
-  }
-  
   return (
   <div className={classes.RequestsSender}>
     <div style={{ display: 'flex', alignItems: 'center', flexDirection: 'column', marginRight: '1em'}}>
-      {keyValuePairs}
+      <div className={classes.Inputs}>
+        <Input 
+          placeholder="key"
+          name="key"
+          label={{ icon: 'asterisk' }}
+          labelPosition='right corner'
+          ref={keyInput}/>
+        <Input
+          placeholder="value"
+          style={{ marginLeft: '1em' }}
+          label={{ icon: 'asterisk' }}
+          labelPosition='right corner'
+          name="value"
+          ref={valueInput}/>
+      </div>
       <Button.Group>
-        <Button onClick={AddNewField}>New Field</Button>
+        <Button onClick={addField}>Add Field</Button>
         <Button.Or />
-        <Button positive onClick={newRequest}>Send Request</Button>
+        <Button positive onClick={() => newRequest()} disabled={!Object.keys(query).length}>Send Request</Button>
       </Button.Group>
-      <h5 style={{ margin: '1em 0 0 0' }}>Last Output = {lastOutput}</h5>
+      <h5 style={{ margin: '1em 0 0 0' }}> Last Output = {lastOutput}</h5>
     </div>
   </div>);
 }

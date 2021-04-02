@@ -11,7 +11,7 @@ class Api::V1::RequestsController < ApplicationController
   end
 
   def index
-    @requests = Request.all
+    @requests = Request.all.order(created_at: :desc)
     render json: @requests.to_json
   end
 
