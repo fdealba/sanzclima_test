@@ -10,12 +10,25 @@ import { connect } from 'react-redux';
 // Components
 import { RequestsHistory } from './RequestsHistory/RequestsHistory';
 import { RequestsSender } from './RequestsSender/RequestsSender';
-import ErrorComponent from './ErrorComponent/errorComponent';
+import ErrorModal from './ErrorModal/ErrorModal';
 
+// Types
+import { AppState } from '../store/reducer';
+
+export interface Request {
+  input: string;
+  output: string;
+}
+
+// Prop Types
+interface Props {
+  onFetchPreviousRequests: () => void;
+  requests: Request[];
+}
 
 const { useEffect, useState } = React;
 
-const App = ({ onFetchPreviousRequests, requests }) => {
+const App: React.FC<Props> = ({ onFetchPreviousRequests, requests }) => {
   const [lastOutput, setLastOutput] = useState(0);
   const [query, setQuery] = useState({});
   const [error, setError] = useState(false);
@@ -47,7 +60,7 @@ const App = ({ onFetchPreviousRequests, requests }) => {
 
   return (
     <>
-      {error ? <ErrorComponent setError={setError} errorMessage="Please enter a number value in any of the values"/> : ''}
+      {error ? <ErrorModal setError={setError} errorMessage="Please enter a number value in any of the values"/> : ''}
       <h3 style={{ textAlign: 'center' }}>Your query:</h3>
       <p style={{ textAlign: 'center' }}>
         {JSON.stringify(query)}
@@ -63,7 +76,8 @@ const mapDispatchToProps = dispatch => {
     onFetchPreviousRequests: () => dispatch(appActions.onFetchPreviousRequests())
   };
 }
-const mapStateToProps = (state) => {
+
+const mapStateToProps = (state: AppState) => {
   return {
     requests: state.requests
   };

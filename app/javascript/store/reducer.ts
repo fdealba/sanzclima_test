@@ -1,11 +1,16 @@
 import * as actionTypes from './actionTypes';
 import { updateObject } from './utility';
+import { Request } from '../components/App';
 
-const initialState = {
+export interface AppState {
+  requests: Request[];
+}
+
+const initialState: AppState = {
   requests: []
 }
 
-const setRequestsData = (state, action) => {
+const setRequestsData = (state: AppState, action: AppState) => {
   return updateObject(state, { requests: action.requests });
 }
 

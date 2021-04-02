@@ -1,24 +1,37 @@
 import * as React from 'react';
-import classes from './RequestsHistory.module.scss';
-import { Table } from 'semantic-ui-react'
 
+// Style
+import classes from './RequestsHistory.module.scss';
+
+// Semantic UI Components
+import { Table } from 'semantic-ui-react';
+
+// Types
+import { Request } from '../App';
+
+// Destructured variables for Table
 const { Row, Cell, HeaderCell, Header, Body } = Table;
 
-export const RequestsHistory = ({ requests }) => {
+// Prop Types
+interface Props {
+  requests: Request[];
+}
 
-  const formatedRequests = requests.map((request, idx) => {
+export const RequestsHistory: React.FC<Props> = ({ requests }) => {
+  
+  const formatedRequests = requests.map((request, idx: number) => {
     return (
       <Row key={idx}>
         <Cell>{request.input}</Cell>
         <Cell>{request.output}</Cell>
-       </Row>
+      </Row>
     )
   });
 
   return (
   <div className={classes.RequestsHistory}>
     <h3>Requests History:</h3>
-    {requests && requests.length
+    { requests && requests.length
     ? <Table className={classes.RequestsContainer}>
         <Header>
           <Row>
@@ -31,7 +44,7 @@ export const RequestsHistory = ({ requests }) => {
           {formatedRequests}
         </Body>
       </Table>
-    : <p>'No Requests have been done yet!'</p>}
+    : <p>'No Requests have been done yet!'</p> }
 
   </div>);
 }

@@ -1,55 +1,67 @@
 import * as React from 'react';
+// Styles
 import classes from './RequestsSender.module.scss';
+
+// Semantic UI
 import { Button, Input } from 'semantic-ui-react';
 
-
+// Destructured variables for Button & React.
+const { Group, Or } = Button;
 const { useRef } = React;
 
-export const RequestsSender = ({ lastOutput, setQuery, query, newRequest }) => {
-  const keyInput = useRef();
-  const valueInput = useRef();
+// Prop types
+interface Props {
+  lastOutput: number;
+  setQuery: (fn: Function) => void;
+  query: object;
+  newRequest: () => void;
+}
 
-  const addField = (event) => {
-    setQuery((query) => {
+export const RequestsSender: React.FC<Props> = ({ lastOutput, setQuery, query, newRequest }) => {
+  const keyInput = useRef(null);
+  const valueInput = useRef(null);
+
+  const addField = () => {
+    let key = keyInput.current.inputRef.current.value;
+    let value = valueInput.current.inputRef.current.value;
+    // If value is a number, store it as a number
+    value = Number(value) >= 0 ? Number(value) : value;
+    setQuery((query: object) => {
       const newQuery = { ...query };
-      if (keyInput.current && valueInput.current) {
-        let key = keyInput.current.inputRef.current.value;
-        let value = valueInput.current.inputRef.current.value;
-        value = Number(value) >= 0 ? Number(value) : value;
-        // Set new query key value pair
-        newQuery[key] = value;
-        // Clean Inputs
-        keyInput.current.inputRef.current.value = "";
-        valueInput.current.inputRef.current.value = "";
-      }
+      // Set new query key value pair
+      newQuery[key] = value;
       return newQuery
     });
+    // Clean Inputs
+    keyInput.current.inputRef.current.value = "";
+    valueInput.current.inputRef.current.value = "";
   }
 
   return (
-  <div className={classes.RequestsSender}>
-    <div style={{ display: 'flex', alignItems: 'center', flexDirection: 'column', marginRight: '1em'}}>
-      <div className={classes.Inputs}>
-        <Input 
-          placeholder="key"
-          name="key"
-          label={{ icon: 'asterisk' }}
-          labelPosition='right corner'
-          ref={keyInput}/>
-        <Input
-          placeholder="value"
-          style={{ marginLeft: '1em' }}
-          label={{ icon: 'asterisk' }}
-          labelPosition='right corner'
-          name="value"
-          ref={valueInput}/>
+    <div className={classes.RequestsSender}>
+      <div className={classes.Container}>
+        <div className={classes.Inputs}>
+          <Input
+            placeholder="key"
+            name="key"
+            label={{ icon: 'asterisk' }}
+            labelPosition='right corner'
+            ref={keyInput}/>
+          <Input
+            placeholder="value"
+            style={{ marginLeft: '1em' }}
+            label={{ icon: 'asterisk' }}
+            labelPosition='right corner'
+            name="value"
+            ref={valueInput}/>
+        </div>
+        <Group>
+          <Button onClick={addField}>Add Field</Button>
+          <Or/>
+          <Button positive onClick={newRequest} disabled={!Object.keys(query).length}>Send Request</Button>
+        </Group>
+        <h5 style={{ margin: '1em 0 0 0' }}> Last Output = {lastOutput}</h5>
       </div>
-      <Button.Group>
-        <Button onClick={addField}>Add Field</Button>
-        <Button.Or />
-        <Button positive onClick={() => newRequest()} disabled={!Object.keys(query).length}>Send Request</Button>
-      </Button.Group>
-      <h5 style={{ margin: '1em 0 0 0' }}> Last Output = {lastOutput}</h5>
     </div>
-  </div>);
+  );
 }

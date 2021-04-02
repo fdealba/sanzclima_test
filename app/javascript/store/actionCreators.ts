@@ -4,8 +4,8 @@ import axios from 'axios';
 export const onFetchPreviousRequests = () => {
   return dispatch => {
     axios.get('api/v1/requests/history')
-      .then( response => {
-        dispatch(setRequests(response.data));
+      .then( ({ data }) => {
+        dispatch(setRequests(data));
       })
       .catch( error => {
         console.error(error);

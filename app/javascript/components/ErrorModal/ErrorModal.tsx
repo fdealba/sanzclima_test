@@ -1,8 +1,20 @@
 import * as React from 'react';
+
+// Semantic UI components
 import { Button, Header, Icon, Modal } from 'semantic-ui-react'
 
-const ErrorComponent = ({ setError, errorMessage }) => {
-  const [open, setOpen] = React.useState(true)
+// Destructured variables for Modal && React
+const { Content, Actions } = Modal;
+const { useState } = React;
+
+// Prop Types
+interface Props {
+  setError: (fn: Function | boolean) => void;
+  errorMessage: string;
+}
+
+const ErrorModal: React.FC<Props> = ({ setError, errorMessage }) => {
+  const [open, setOpen] = useState(true)
 
   return (
     <Modal
@@ -19,18 +31,19 @@ const ErrorComponent = ({ setError, errorMessage }) => {
         <Icon name='x icon' />
         Error
       </Header>
-      <Modal.Content>
+      <Content>
         <p>
           {errorMessage}
         </p>
-      </Modal.Content>
-      <Modal.Actions>
+      </Content>
+      <Actions>
         <Button basic color='red' inverted onClick={() => setOpen(false)}>
-          <Icon name='remove' /> Close
+          <Icon name='remove' />
+          Close
         </Button>
-      </Modal.Actions>
+      </Actions>
     </Modal>
   )
 }
 
-export default ErrorComponent;
+export default ErrorModal;
