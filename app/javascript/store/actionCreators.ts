@@ -1,5 +1,7 @@
 import * as actionTypes from './actionTypes';
 import axios from 'axios';
+import { Actions } from './reducer';
+import { Request } from '../components/App';
 
 export const onFetchPreviousRequests = () => {
   return dispatch => {
@@ -13,9 +15,9 @@ export const onFetchPreviousRequests = () => {
   };
 };
 
-export const setRequests = (state) => {
+export const setRequests = (state: Request) => {
   return {
     type: actionTypes.SET_PREVIOUS_REQUESTS,
     requests: state
-  };
+  } as unknown as Actions;
 };

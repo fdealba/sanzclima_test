@@ -12,12 +12,12 @@ const { useRef } = React;
 // Prop types
 interface Props {
   lastOutput: number;
-  setQuery: (fn: Function) => void;
-  query: object;
-  newRequest: () => void;
+  submitDisabled: boolean;
+  setQuery: React.Dispatch<React.SetStateAction<{}>>;
+  newRequest: (event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => void;
 }
 
-export const RequestsSender: React.FC<Props> = ({ lastOutput, setQuery, query, newRequest }) => {
+export const RequestsSender: React.FC<Props> = ({ lastOutput, setQuery, newRequest, submitDisabled }) => {
   const keyInput = useRef(null);
   const valueInput = useRef(null);
 
@@ -58,7 +58,7 @@ export const RequestsSender: React.FC<Props> = ({ lastOutput, setQuery, query, n
         <Group>
           <Button onClick={addField}>Add Field</Button>
           <Or/>
-          <Button positive onClick={newRequest} disabled={!Object.keys(query).length}>Send Request</Button>
+          <Button positive onClick={newRequest} disabled={submitDisabled}>Send Request</Button>
         </Group>
         <h5 style={{ margin: '1em 0 0 0' }}> Last Output = {lastOutput}</h5>
       </div>

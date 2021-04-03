@@ -9,7 +9,7 @@ const { useState } = React;
 
 // Prop Types
 interface Props {
-  setError: (fn: Function | boolean) => void;
+  setError: React.Dispatch<React.SetStateAction<boolean>>;
   errorMessage: string;
 }
 

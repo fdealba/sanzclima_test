@@ -65,7 +65,7 @@ const App: React.FC<Props> = ({ onFetchPreviousRequests, requests }) => {
       <p style={{ textAlign: 'center' }}>
         {JSON.stringify(query)}
       </p>
-      <RequestsSender lastOutput={lastOutput} setQuery={setQuery} query={query} newRequest={newRequest} />
+      <RequestsSender lastOutput={lastOutput} setQuery={setQuery} submitDisabled={!Object.values(query).length} newRequest={newRequest} />
       <RequestsHistory requests={requests}/>
     </>
   )
