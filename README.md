@@ -20,12 +20,17 @@ rails db:create db:migrate
 bundle && yarn
 ```
 
-4. Run on port 3000
+4. Running the App:
 
+Build backend:
 ``` console
 rails s
 ```
 
+Build frontend in a separated terminal:
+``` console
+./bin/webpack-dev-server
+```
 
 For running tests:
 
