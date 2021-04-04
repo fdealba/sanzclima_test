@@ -36,10 +36,17 @@ describe 'Requests API', type: :request do
       end
     end
 
-    it 'returns a validation error if request params is empty' do
+    it 'returns a output validation error if request params is empty' do
       expect {
         post '/api/v1/requests/new'
       }.to raise_error(ActiveRecord::RecordInvalid, "Validation failed: Output can't be blank, Output is not a number")
+    end
+
+    it 'returns 0 as output if none of the input values are numbers' do
+      post '/api/v1/requests/new', params: { asd: "asd", asdf: "asdf" }
+
+      parsed_response = JSON.parse(response.body)
+      expect(parsed_response["output"]).to eq(0)
     end
   end
 end

@@ -21,7 +21,7 @@ const setRequestsData = (state: AppState, action: AppState) => {
 
 const reducer = (state = initialState, action: Actions) => {
   switch (action.type) {
-    case actionTypes.SET_PREVIOUS_REQUESTS : return setRequestsData(state, action);
+    case actionTypes.SET_PREVIOUS_REQUESTS: return setRequestsData(state, action);
     default: return state;
   }
 }

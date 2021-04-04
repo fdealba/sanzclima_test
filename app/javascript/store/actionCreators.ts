@@ -6,10 +6,10 @@ import { Request } from '../components/App';
 export const onFetchPreviousRequests = () => {
   return dispatch => {
     axios.get('api/v1/requests/history')
-      .then( ({ data }) => {
+      .then(({ data }) => {
         dispatch(setRequests(data));
       })
-      .catch( error => {
+      .catch(error => {
         console.error(error);
       })
   };

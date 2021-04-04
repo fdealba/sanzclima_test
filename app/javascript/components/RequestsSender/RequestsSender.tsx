@@ -46,19 +46,29 @@ export const RequestsSender: React.FC<Props> = ({ lastOutput, setQuery, newReque
             name="key"
             label={{ icon: 'asterisk' }}
             labelPosition='right corner'
-            ref={keyInput}/>
+            ref={keyInput} />
           <Input
             placeholder="value"
             style={{ marginLeft: '1em' }}
             label={{ icon: 'asterisk' }}
             labelPosition='right corner'
             name="value"
-            ref={valueInput}/>
+            ref={valueInput} />
         </div>
         <Group>
-          <Button onClick={addField}>Add Field</Button>
-          <Or/>
-          <Button positive onClick={newRequest} disabled={submitDisabled}>Send Request</Button>
+          <Button
+            onClick={addField}
+            data-testid="add">
+            Add Field
+          </Button>
+          <Or />
+          <Button
+            positive
+            onClick={newRequest}
+            data-testid="send"
+            disabled={submitDisabled}>
+            Send Request
+          </Button>
         </Group>
         <h5 style={{ margin: '1em 0 0 0' }}> Last Output = {lastOutput}</h5>
       </div>

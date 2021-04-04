@@ -1,6 +1,6 @@
 .RequestsHistory {
   width: 100%;
-  box-shadow: 1px 1px 10px rgba(0, 0, 0, .15);
+  box-shadow: 1px 1px 10px rgba(0, 0, 0, 0.15);
   padding: 1.5em;
   tbody {
     display: block;
@@ -12,6 +12,5 @@
     display: table;
     width: 100%;
     table-layout: fixed;
-  }  
+  }
 }
-

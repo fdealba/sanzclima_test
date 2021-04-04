@@ -45,7 +45,7 @@ const App: React.FC<Props> = ({ onFetchPreviousRequests, requests }) => {
     if (Object.values(query).some(value => Number(value) >= 0)) {
       axios.post('api/v1/requests/new', {
         ...query
-      }).then(({ data: { output }}) => {
+      }).then(({ data: { output } }) => {
         if (output !== null) {
           localStorage.setItem('last_output', output);
           setLastOutput(output);
@@ -60,13 +60,13 @@ const App: React.FC<Props> = ({ onFetchPreviousRequests, requests }) => {
 
   return (
     <>
-      {error ? <ErrorModal setError={setError} errorMessage="Please enter a number value in any of the values"/> : ''}
+      {error ? <ErrorModal setError={setError} errorMessage="Please enter a number value in any of the values" /> : ''}
       <h3 style={{ textAlign: 'center' }}>Your query:</h3>
-      <p style={{ textAlign: 'center' }}>
+      <p style={{ textAlign: 'center' }} data-testid="query">
         {JSON.stringify(query)}
       </p>
       <RequestsSender lastOutput={lastOutput} setQuery={setQuery} submitDisabled={!Object.values(query).length} newRequest={newRequest} />
-      <RequestsHistory requests={requests}/>
+      <RequestsHistory requests={requests} />
     </>
   )
 }

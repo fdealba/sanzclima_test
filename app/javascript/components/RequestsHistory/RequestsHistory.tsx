@@ -18,7 +18,7 @@ interface Props {
 }
 
 export const RequestsHistory: React.FC<Props> = ({ requests }) => {
-  
+
   const formatedRequests = requests.map((request, idx: number) => {
     return (
       <Row key={idx}>
@@ -29,22 +29,22 @@ export const RequestsHistory: React.FC<Props> = ({ requests }) => {
   });
 
   return (
-  <div className={classes.RequestsHistory}>
-    <h3>Requests History:</h3>
-    { requests && requests.length
-    ? <Table className={classes.RequestsContainer}>
-        <Header>
-          <Row>
-            <HeaderCell>Input</HeaderCell>
-            <HeaderCell>Output</HeaderCell>
-          </Row>
-        </Header>
-  
-        <Body>
-          {formatedRequests}
-        </Body>
-      </Table>
-    : <p>'No Requests have been done yet!'</p> }
+    <div className={classes.RequestsHistory}>
+      <h3>Requests History:</h3>
+      {requests && requests.length
+        ? <Table className={classes.RequestsContainer}>
+          <Header>
+            <Row>
+              <HeaderCell>Input</HeaderCell>
+              <HeaderCell>Output</HeaderCell>
+            </Row>
+          </Header>
 
-  </div>);
+          <Body>
+            {formatedRequests}
+          </Body>
+        </Table>
+        : <p data-testid="no-requests-message">No Requests have been done yet!</p>}
+
+    </div>);
 }

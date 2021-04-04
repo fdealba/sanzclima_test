@@ -16,19 +16,21 @@ interface Props {
 const ErrorModal: React.FC<Props> = ({ setError, errorMessage }) => {
   const [open, setOpen] = useState(true)
 
+  const closeAndRemoveError = () => {
+    setOpen(false);
+    setError(false);
+  }
+
   return (
     <Modal
       basic
-      onClose={() => {
-        setOpen(false);
-        setError(false);
-      }}
+      onClose={closeAndRemoveError}
       onOpen={() => setOpen(true)}
       open={open}
       size='small'
     >
       <Header icon>
-        <Icon name='x icon' />
+        <Icon name='x' />
         Error
       </Header>
       <Content>
@@ -37,7 +39,12 @@ const ErrorModal: React.FC<Props> = ({ setError, errorMessage }) => {
         </p>
       </Content>
       <Actions>
-        <Button basic color='red' inverted onClick={() => setOpen(false)}>
+        <Button
+          basic
+          color='red'
+          inverted
+          onClick={closeAndRemoveError}
+          data-testid="close">
           <Icon name='remove' />
           Close
         </Button>
