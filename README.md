@@ -15,7 +15,9 @@ Running this project in localhost:
 
 4. Run on port 3000
 
-``` rails s ```
+``` console
+rails s
+```
 
 
 For running tests:
