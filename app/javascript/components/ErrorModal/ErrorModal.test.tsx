@@ -22,7 +22,7 @@ describe('ErrorModal', () => {
     );
     const closeButton = getByTestId('close');
     const errorMessage = getByText('error!');
-    
+
     userEvent.click(closeButton);
 
     expect(closeButton).toBeNull;

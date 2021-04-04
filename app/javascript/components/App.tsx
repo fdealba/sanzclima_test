@@ -60,13 +60,22 @@ const App: React.FC<Props> = ({ onFetchPreviousRequests, requests, onAppendLastR
 
   return (
     <>
-      {error ? <ErrorModal setError={setError} errorMessage="Please enter a number value in any of the values" /> : ''}
+      {error
+        ? <ErrorModal
+          setError={setError}
+          errorMessage="Please enter a number value in any of the values" />
+        : ''}
       <h3 style={{ textAlign: 'center' }}>Your query:</h3>
       <p style={{ textAlign: 'center' }} data-testid="query">
         {JSON.stringify(query)}
       </p>
-      <RequestsSender lastOutput={lastOutput} setQuery={setQuery} submitDisabled={!Object.values(query).length} newRequest={newRequest} />
-      <RequestsHistory requests={requests} />
+      <RequestsSender
+        lastOutput={lastOutput}
+        setQuery={setQuery}
+        submitDisabled={!Object.values(query).length}
+        newRequest={newRequest} />
+      <RequestsHistory
+        requests={requests} />
     </>
   )
 }

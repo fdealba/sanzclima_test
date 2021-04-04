@@ -26,12 +26,14 @@ export const RequestsSender: React.FC<Props> = ({ lastOutput, setQuery, newReque
     let value = valueInput.current.inputRef.current.value;
     // If value is a number, store it as a number
     value = Number(value) >= 0 ? Number(value) : value;
+
     setQuery((query: object) => {
       const newQuery = { ...query };
       // Set new query key value pair
       newQuery[key] = value;
       return newQuery
     });
+
     // Clean Inputs
     keyInput.current.inputRef.current.value = "";
     valueInput.current.inputRef.current.value = "";
@@ -70,7 +72,7 @@ export const RequestsSender: React.FC<Props> = ({ lastOutput, setQuery, newReque
             Send Request
           </Button>
         </Group>
-        <h5 style={{ margin: '1em 0 0 0' }}> Last Output = {lastOutput}</h5>
+        <h5 style={{ margin: '1em 0 0 0' }}>Last Output = {lastOutput}</h5>
       </div>
     </div>
   );
