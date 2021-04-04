@@ -8,20 +8,21 @@ export interface AppState {
 
 export interface Actions {
   type: "SET_PREVIOUS_REQUESTS" | "APPEND_LAST_REQUEST",
-  requests: Request[];
+  requests?: Request[];
+  request?: Request;
 };
 
 const initialState: AppState = {
   requests: []
 }
 
-const setRequestsData = (state: AppState, action: AppState) => {
+const setRequestsData = (state: AppState, action: Actions) => {
   return updateObject(state, { requests: action.requests });
 }
 
-const appendRequestData = (state: AppState, action) => {
+const appendRequestData = (state: AppState, action: Actions) => {
   return {
-    requests: [...state.requests, action.request]
+    requests: [action.request, ...state.requests]
   }
 }
 

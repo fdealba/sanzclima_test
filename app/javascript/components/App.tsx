@@ -43,16 +43,15 @@ const App: React.FC<Props> = ({ onFetchPreviousRequests, requests, onAppendLastR
   }, [])
 
   const newRequest = () => {
+    // New error if none of the values are numbers.
     if (Object.values(query).some(value => Number(value) >= 0)) {
       axios.post('api/v1/requests/new', {
         ...query
-      }).then(({ data: { output } }) => {
-        if (output !== null) {
-          localStorage.setItem('last_output', output);
-          setLastOutput(output);
-          setQuery({});
-          onAppendLastRequest({ input: "asd", output: output });
-        }
+      }).then(({ data: { input, output } }) => {
+        onAppendLastRequest({ input: input, output: output });
+        localStorage.setItem('last_output', output);
+        setLastOutput(output);
+        setQuery({});
       })
     } else {
       setError(true);

@@ -5,7 +5,7 @@ class Api::V1::RequestsController < ApplicationController
     request = Request.new(input: request_params)
     request.output = determine_output(request_params);
     if request.save!
-      render json: { output: request.output }.to_json, status: :created
+      render json: request, status: :created
     else
       render json: request.errors, status: :unprocessable_entity
     end

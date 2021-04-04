@@ -44,7 +44,6 @@ RSpec.configure do |config|
   config.before(:suite) do
     unless ENV['CI'] == 'true'
       RSpec.configuration.webpack_dev_server_pid = fork do
-        puts "Child process starting webpack-dev-server"
         webpack_dev_server_cmd = [
           "#{Rails.root}/node_modules/.bin/webpack-dev-server",
           "--config #{Rails.root}/config/webpack/development.js",
@@ -58,7 +57,6 @@ RSpec.configure do |config|
 
   config.after(:suite) do
     unless ENV['CI'] == 'true'
-      puts "Killing webpack-dev-server"
       Process.kill("HUP",RSpec.configuration.webpack_dev_server_pid)
       begin
         Timeout.timeout(2) do
