@@ -37,25 +37,36 @@ const App: React.FC<Props> = ({ onFetchPreviousRequests, requests, onAppendLastR
 
   useEffect(() => {
     onFetchPreviousRequests();
+    onFetchLastOutputFromLocalStorage();
+  }, [])
+
+  const onFetchLastOutputFromLocalStorage = () => {
     if (localStorage.getItem("last_output")) {
       setLastOutput(Number(localStorage.getItem("last_output")));
     }
-  }, [])
+  }
 
-  const newRequest = () => {
+  const handleNewRequest = () => {
     // New error if none of the values are numbers.
     if (Object.values(query).some(value => Number(value) >= 0)) {
       axios.post('api/v1/requests/new', {
         ...query
       }).then(({ data: { input, output } }) => {
-        onAppendLastRequest({ input: input, output: output });
-        localStorage.setItem('last_output', output);
-        setLastOutput(output);
-        setQuery({});
+        handleNewRequestResponseData(input, output);
       })
     } else {
       setError(true);
     }
+  }
+
+  const handleNewRequestResponseData = (input: string, output: number) => {
+    // Add new request to avoid calling requests/history again
+    onAppendLastRequest({ input: input, output: String(output) });
+    // Save output in localstorage
+    localStorage.setItem('last_output', String(output));
+    setLastOutput(output);
+    // Clean the query
+    setQuery({});
   }
 
   return (
@@ -73,7 +84,7 @@ const App: React.FC<Props> = ({ onFetchPreviousRequests, requests, onAppendLastR
         lastOutput={lastOutput}
         setQuery={setQuery}
         submitDisabled={!Object.values(query).length}
-        newRequest={newRequest} />
+        onNewRequestClicked={handleNewRequest} />
       <RequestsHistory
         requests={requests} />
     </>
@@ -83,7 +94,7 @@ const App: React.FC<Props> = ({ onFetchPreviousRequests, requests, onAppendLastR
 const mapDispatchToProps = dispatch => {
   return {
     onFetchPreviousRequests: () => dispatch(appActions.onFetchPreviousRequests()),
-    onAppendLastRequest: (request) => dispatch(appActions.onAppendLastRequest(request))
+    onAppendLastRequest: (request: Request) => dispatch(appActions.onAppendLastRequest(request))
   };
 }
 

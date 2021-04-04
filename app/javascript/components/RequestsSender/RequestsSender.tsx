@@ -4,6 +4,7 @@ import classes from './RequestsSender.module.scss';
 
 // Semantic UI
 import { Button, Input } from 'semantic-ui-react';
+import { cleanup } from '@testing-library/react';
 
 // Destructured variables for Button & React.
 const { Group, Or } = Button;
@@ -14,14 +15,19 @@ interface Props {
   lastOutput: number;
   submitDisabled: boolean;
   setQuery: React.Dispatch<React.SetStateAction<{}>>;
-  newRequest: (event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => void;
+  onNewRequestClicked: (event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => void;
 }
 
-export const RequestsSender: React.FC<Props> = ({ lastOutput, setQuery, newRequest, submitDisabled }) => {
+export const RequestsSender: React.FC<Props> = ({ lastOutput, setQuery, onNewRequestClicked, submitDisabled }) => {
   const keyInput = useRef(null);
   const valueInput = useRef(null);
 
-  const addField = () => {
+  const onAddNewFieldClicked = () => {
+    addKeyValuePairToQuery();
+    cleanInputs();
+  }
+
+  const addKeyValuePairToQuery = () => {
     let key = keyInput.current.inputRef.current.value;
     let value = valueInput.current.inputRef.current.value;
     // If value is a number, store it as a number
@@ -33,8 +39,9 @@ export const RequestsSender: React.FC<Props> = ({ lastOutput, setQuery, newReque
       newQuery[key] = value;
       return newQuery
     });
+  }
 
-    // Clean Inputs
+  const cleanInputs = () => {
     keyInput.current.inputRef.current.value = "";
     valueInput.current.inputRef.current.value = "";
   }
@@ -59,14 +66,14 @@ export const RequestsSender: React.FC<Props> = ({ lastOutput, setQuery, newReque
         </div>
         <Group>
           <Button
-            onClick={addField}
+            onClick={onAddNewFieldClicked}
             data-testid="add">
             Add Field
           </Button>
           <Or />
           <Button
             positive
-            onClick={newRequest}
+            onClick={onNewRequestClicked}
             data-testid="send"
             disabled={submitDisabled}>
             Send Request

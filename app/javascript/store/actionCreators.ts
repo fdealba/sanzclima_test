@@ -15,14 +15,14 @@ export const onFetchPreviousRequests = () => {
   };
 };
 
-export const setRequests = (state: Request) => {
+export const setRequests = (state: Request[]) => {
   return {
     type: actionTypes.SET_PREVIOUS_REQUESTS,
     requests: state
   } as unknown as Actions;
 };
 
-export const onAppendLastRequest = (request) => {
+export const onAppendLastRequest = (request: Request) => {
   return {
     type: actionTypes.APPEND_LAST_REQUEST,
     request: request
