@@ -1,4 +1,4 @@
-# README
+# Sanz Clima test
 
 Running this project in localhost:
 
