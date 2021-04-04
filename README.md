@@ -3,20 +3,27 @@
 Running this project in localhost:
 
 1. Clone the repo using `git clone`
-``` git clone https://github.com/fdealba/sanzclima_test.git ```
+
+``` console
+sanzclima_test git:(main): git clone https://github.com/fdealba/sanzclima_test.git
+```
 
 2. DB setup
 
-``` rails db:create db:migrate ```
+``` console
+sanzclima_test git:(main): rails db:create db:migrate
+```
 
 3. Install dependencies
 
-``` bundle && yarn ```
+``` console
+sanzclima_test git:(main): bundle && yarn
+```
 
 4. Run on port 3000
 
 ``` console
-rails s
+sanzclima_test git:(main): rails s
 ```
 
 
@@ -24,8 +31,12 @@ For running tests:
 
 1. Frontend
 
-``` yarn test ``` or ``` jest ```
+``` console
+sanzclima_test git:(main): yarn test
+```
 
 2. Backend
 
-``` rspec ```
+``` console
+sanzclima_test git:(main): rspec
+```
