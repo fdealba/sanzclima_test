@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { render, fireEvent, waitFor, screen, cleanup } from '@testing-library/react';
+import { render, cleanup } from '@testing-library/react';
 import { RequestsHistory } from './RequestsHistory';
 
 
@@ -19,7 +19,7 @@ describe('RequestsHistory', () => {
     const { getByTestId, getByText } = render(
       <RequestsHistory requests={[]} />
     );
-    
+
     const secondaryTextById = getByTestId('no-requests-message');
     expect(secondaryTextById).toBeTruthy;
 

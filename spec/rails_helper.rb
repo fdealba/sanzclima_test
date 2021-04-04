@@ -39,6 +39,39 @@ RSpec.configure do |config|
   # instead of true.
   config.use_transactional_fixtures = true
 
+  config.add_setting :webpack_dev_server_pid
+
+  config.before(:suite) do
+    unless ENV['CI'] == 'true'
+      RSpec.configuration.webpack_dev_server_pid = fork do
+        puts "Child process starting webpack-dev-server"
+        webpack_dev_server_cmd = [
+          "#{Rails.root}/node_modules/.bin/webpack-dev-server",
+          "--config #{Rails.root}/config/webpack/development.js",
+          "--content-base #{Rails.root}/public/packs",
+          "--quiet"
+        ].join(" ")
+        exec(webpack_dev_server_cmd)
+      end
+    end
+  end
+
+  config.after(:suite) do
+    unless ENV['CI'] == 'true'
+      puts "Killing webpack-dev-server"
+      Process.kill("HUP",RSpec.configuration.webpack_dev_server_pid)
+      begin
+        Timeout.timeout(2) do
+          Process.wait(RSpec.configuration.webpack_dev_server_pid,0)
+        end
+      rescue => Timeout::Error
+        Process.kill(9,RSpec.configuration.webpack_dev_server_pid)
+      ensure
+        RSpec.configuration.webpack_dev_server_pid = nil
+      end
+    end
+  end
+
   # You can uncomment this line to turn off ActiveRecord support entirely.
   # config.use_active_record = false
 

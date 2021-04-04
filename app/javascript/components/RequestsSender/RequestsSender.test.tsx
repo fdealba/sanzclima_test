@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { render, fireEvent, screen, cleanup, findByText } from '@testing-library/react';
+import { render, cleanup } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 
 
@@ -35,7 +35,7 @@ describe('RequestsSender', () => {
     const valueInput = getByPlaceholderText('value');
     userEvent.type(keyInput, 'hello');
     userEvent.type(valueInput, '200');
-    
+
     expect(keyInput).toHaveProperty('value', 'hello');
     expect(valueInput).toHaveProperty('value', '200');
 

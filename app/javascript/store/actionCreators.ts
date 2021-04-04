@@ -21,3 +21,10 @@ export const setRequests = (state: Request) => {
     requests: state
   } as unknown as Actions;
 };
+
+export const onAppendLastRequest = (request) => {
+  return {
+    type: actionTypes.APPEND_LAST_REQUEST,
+    request: request
+  }
+}

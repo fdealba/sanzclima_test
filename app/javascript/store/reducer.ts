@@ -7,7 +7,7 @@ export interface AppState {
 }
 
 export interface Actions {
-  type: "SET_PREVIOUS_REQUESTS",
+  type: "SET_PREVIOUS_REQUESTS" | "APPEND_LAST_REQUEST",
   requests: Request[];
 };
 
@@ -19,9 +19,16 @@ const setRequestsData = (state: AppState, action: AppState) => {
   return updateObject(state, { requests: action.requests });
 }
 
+const appendRequestData = (state: AppState, action) => {
+  return {
+    requests: [...state.requests, action.request]
+  }
+}
+
 const reducer = (state = initialState, action: Actions) => {
   switch (action.type) {
     case actionTypes.SET_PREVIOUS_REQUESTS: return setRequestsData(state, action);
+    case actionTypes.APPEND_LAST_REQUEST: return appendRequestData(state, action);
     default: return state;
   }
 }

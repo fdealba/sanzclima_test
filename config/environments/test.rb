@@ -6,6 +6,9 @@ require "active_support/core_ext/integer/time"
 # and recreated between test runs. Don't rely on the data there!
 
 Rails.application.configure do
+  unless ENV['CI'] == 'true'
+    config.x.webpacker[:dev_server_host] = "http://localhost:8080"
+  end
   # Settings specified here will take precedence over those in config/application.rb.
 
   config.cache_classes = false

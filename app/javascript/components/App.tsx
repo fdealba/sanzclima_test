@@ -23,12 +23,13 @@ export interface Request {
 // Prop Types
 interface Props {
   onFetchPreviousRequests: () => void;
+  onAppendLastRequest: (request: Request) => void;
   requests: Request[];
 }
 
 const { useEffect, useState } = React;
 
-const App: React.FC<Props> = ({ onFetchPreviousRequests, requests }) => {
+const App: React.FC<Props> = ({ onFetchPreviousRequests, requests, onAppendLastRequest }) => {
   const [lastOutput, setLastOutput] = useState(0);
   const [query, setQuery] = useState({});
   const [error, setError] = useState(false);
@@ -50,7 +51,7 @@ const App: React.FC<Props> = ({ onFetchPreviousRequests, requests }) => {
           localStorage.setItem('last_output', output);
           setLastOutput(output);
           setQuery({});
-          onFetchPreviousRequests();
+          onAppendLastRequest({ input: "asd", output: output });
         }
       })
     } else {
@@ -73,7 +74,8 @@ const App: React.FC<Props> = ({ onFetchPreviousRequests, requests }) => {
 
 const mapDispatchToProps = dispatch => {
   return {
-    onFetchPreviousRequests: () => dispatch(appActions.onFetchPreviousRequests())
+    onFetchPreviousRequests: () => dispatch(appActions.onFetchPreviousRequests()),
+    onAppendLastRequest: (request) => dispatch(appActions.onAppendLastRequest(request))
   };
 }
 
