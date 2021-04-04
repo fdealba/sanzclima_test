@@ -19,6 +19,7 @@ import 'semantic-ui-css/semantic.min.css';
 const csrfToken = document.querySelector('[name="csrf-token"]').content;
 axios.defaults.headers.common['X-CSRF-TOKEN'] = csrfToken;
 
+// Redux devtools
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 
 const store = createStore(appReducer, composeEnhancers(applyMiddleware(thunk)));

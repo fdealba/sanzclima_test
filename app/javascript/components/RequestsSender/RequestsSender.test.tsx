@@ -26,7 +26,7 @@ describe('RequestsSender', () => {
     expect(sendRequestButton).toBeTruthy;
   })
 
-  it('should let you submit a new field', async () => {
+  it('should clean inputs when add field button is clicked', async () => {
     const { getByPlaceholderText, getByTestId } = render(
       <RequestsSender lastOutput={10} submitDisabled={false} setQuery={() => { }} newRequest={() => { }} />
     );

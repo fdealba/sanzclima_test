@@ -1,24 +1,29 @@
 # README
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+Running this project in localhost:
 
-Things you may want to cover:
+1. Clone the repo using `git clone`
+``` git clone https://github.com/fdealba/sanzclima_test.git ```
 
-* Ruby version
+2. DB setup
 
-* System dependencies
+``` rails db:create db:migrate ```
 
-* Configuration
+3. Install dependencies
 
-* Database creation
+``` bundle && yarn ```
 
-* Database initialization
+4. Run on port 3000
 
-* How to run the test suite
+``` rails s ```
 
-* Services (job queues, cache servers, search engines, etc.)
 
-* Deployment instructions
+For running tests:
 
-* ...
+1. Frontend
+
+``` yarn test ``` or ``` jest ```
+
+2. Backend
+
+``` rspec ```
